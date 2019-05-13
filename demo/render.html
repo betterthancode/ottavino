@@ -19,9 +19,9 @@
     <div id="app-root"></div>
     <script type="module">
       import { component } from '../src/index.js';
-      component.customElement({
+      component({
         template: /*html*/`
-          <span class="red" onclick="{{this.myData.model.whatever = 'hi'; console.log(event, this);}}">Hello, {{this.counter}}</span>
+          <span class="red" onclick="{{this.myData.model.whatever = 'hi'; console.log(event, this); console.log(component)}}">Hello, {{this.counter}}</span>
           <span>Counter + 1 = {{this.counter + 1}}</span>
           <div>{{this.myData.model.whatever}}</div>`,
         shadow: false,

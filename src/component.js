@@ -95,7 +95,7 @@ const componentHandler = mountPoint => {
         this[TEMPLATE_META].root = mountPoint;
       }
       const content = this.template.content.cloneNode(true);
-      const proxy = scanDOMTree(content, this.data);
+      const proxy = scanDOMTree(content, this.data, mountPoint);
       return [content, proxy];
     },
     render: function(content) {
@@ -104,7 +104,7 @@ const componentHandler = mountPoint => {
   };
 };
 
-const scanDOMTree = (root, model) => {
+const scanDOMTree = (root, model, element) => {
   const binders = {};
   let proxy;
   const walker = document.createTreeWalker(
@@ -125,7 +125,7 @@ const scanDOMTree = (root, model) => {
             expression.slice(2, -2) + ';'
           );
           currentNode['on' + eventName] = event => {
-            fn.call(proxy, event);
+            fn.call(proxy, event, element);
           };
           currentNode.removeAttribute(currentNode.nodeName);
         }
