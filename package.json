@@ -1,0 +1,11 @@
+{
+  "name": "solarium",
+  "version": "0.0.1",
+  "description": "TBD",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Avichay Eyal <eavichay@gmail.com>",
+  "license": "ISC"
+}
