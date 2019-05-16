@@ -1,11 +1,28 @@
 {
-  "name": "solarium",
-  "version": "0.1.1",
-  "description": "TBD",
-  "main": "index.js",
+  "name": "ottavino",
+  "version": "0.1.0",
+  "description": "tiny, fast and declarative custom elements library (but not only custom elements)",
+  "main": "dist/index.js",
+  "iife": "dist/index.nomodule.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "karma start test/karma.config.js",
+    "pretest": "npm run build",
+    "build": "rollup -c",
+    "prepublish": "npm run build && npm run test"
   },
   "author": "Avichay Eyal <eavichay@gmail.com>",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "karma": "^4.1.0",
+    "karma-chai": "^0.1.0",
+    "karma-chrome-launcher": "^2.2.0",
+    "karma-mocha": "^1.3.0",
+    "karma-mocha-reporter": "^2.2.5",
+    "mocha": "^6.1.4",
+    "rollup": "^1.12.1",
+    "rollup-plugin-terser": "^4.0.4",
+    "rollup-plugin-typescript2": "^0.21.0",
+    "typescript": "^3.4.5"
+  }
 }

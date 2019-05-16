@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>ottavino Demo</title>
+</head>
+<body>
+  <script src="../dist/index.nomodule.js"></script>
+  <script>
+    ottavino.component({
+      tag: 'ottavino-smiley',
+      template: '😃Hello, <slot></slot>😃',
+      shadow: true
+    });
+  </script>
+  <h1>ottavino Demo</h1>
+  <h2>No module (iife) "hello" component</h2>
+  <p>Insert any text within the shadow DOM</p>
+  <ottavino-smiley><span id="entry">ottavino</span></ottavino-smiley>
+  <hr/>
+  <input type="text" onfocusin="this.select()" oninput="document.querySelector('#entry').innerText = this.value" value="ottavino">
+</body>
+</html>

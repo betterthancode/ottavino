@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ottavino Popup Demo</title>
+    <style>
+      .credit {
+        text-align: right;
+      }
+    </style>
+  </head>
+  <template id="pop-up-template">
+    <style>
+      :host {
+        position: relative;
+      }
+      :host(:not([show-content]))>#view {
+        display: none !important;
+      }
+
+      :host([theme]) {
+        position: relative;
+      }
+
+      :host([theme]) #view {
+        display: inline-block;
+        padding: 0.5rem;
+        overflow: hidden;
+        width: max-content;
+        height: max-content;
+      }
+
+      :host([theme="default"]) #view {
+        top: 0;
+        border: 1px solid #444444;
+        box-shadow: 0px 2px 2px 1px rgba(0, 0, 0, 0.3);
+        border-radius: 4px;
+        background-color: #f3f3f3;
+      }
+
+      :host div[part="trigger"] {
+        cursor: pointer;
+        user-select: none;
+      }
+
+      :host #view {
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+    </style>
+    <div part="trigger" id="trigger" onclick="{{this.toggle(component)}}">
+      <slot name="trigger"></slot>
+    </div>
+    <div part="content" id="view">
+      <slot></slot>
+    </div>
+  </template>
+
+  <body style="text-align: center">
+    <h1>ottavino Pop-Up Custom Element Demo</h1>
+
+    <script type="module">
+      import { component } from '../dist/index.js';
+      component({
+        tag: 'pop-up',
+        template: document.querySelector('#pop-up-template'),
+        shadow: true,
+        init: component => component.removeAttribute('hidden'),
+        this: {
+          toggle: component => component.toggleAttribute('show-content'),
+        }
+      });
+
+      component({
+        tag: 'ham-burger',
+        shadow: true,
+        template: /*html*/`
+          <style>
+            :host {
+              zoom: 0.80;
+              cursor: pointer;
+              display: flex;
+              align-items: center;
+              padding: 8px;
+              transition: 250ms ease-in-out;
+            }
+
+            :host(:hover) {
+              background-color: #fff;
+              text-decoration: underline;
+            }
+
+            :host(:hover) ::slotted(img) {
+              margin: 0 16px 0 0;
+              border-radius: 5px;
+              width: 128px;
+              height: 128px;
+            }
+
+            ::slotted(img) {
+              margin: 16px 0 16px 32px;
+              transition: 150ms ease-in-out;
+              border: 5px double #333;
+              width: 96px;
+              height: 96px;
+              margin-right: 24px;
+              border-radius: 50%;
+            }
+          </style>
+          <slot></slot>
+        `
+      })
+    </script>
+
+    Click the hamburger to hide/show the menu
+    <pop-up hidden theme="default">
+      <span slot="trigger" style="font-size: 64px">🍔</span>
+      <div>
+        <h1>Today's Sepcials</h1>
+        <ham-burger>
+          <img
+            src="https://live.staticflickr.com/126/408384715_7c3d793879_z.jpg">
+          Bacon Burgers on Brioche Buns
+        </ham-burger>
+        <ham-burger>
+          <img src="https://cdn.pixabay.com/photo/2017/09/02/13/38/burger-2707320_960_720.jpg">
+          Umami Burgers with Port and Stilton
+        </ham-burger>
+        <ham-burger>
+          <img src="https://live.staticflickr.com/126/408384715_7c3d793879_z.jpg">
+          Pug Burger
+        </ham-burger>
+        <ham-burger>
+          <img src="https://www.maxpixel.net/static/photo/1x/Sandwich-Hamburger-Seed-Bun-Burger-Grilled-1552436.jpg">
+          Green-Chile Burgers with Fried Eggs
+        </ham-burger>
+        </div>
+    </pop-up>
+
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc euismod magna et justo suscipit, at placerat nulla dictum.
+      Sed placerat lorem ut elementum vehicula. Sed tristique sem molestie pharetra convallis. Praesent odio nibh, dictum vel
+      aliquet volutpat, imperdiet vitae est. Nam at sodales magna, id suscipit felis. Nunc vehicula pulvinar odio, id mollis
+      enim. Ut eros lacus, faucibus a volutpat a, fringilla vitae mauris. Vestibulum et fringilla massa. Praesent mattis
+      vehicula diam sit amet fringilla.
+      
+      Nam euismod at leo et tristique. In magna diam, cursus in magna quis, scelerisque ultricies tortor. Nullam tristique
+      fringilla sollicitudin. Morbi pellentesque tincidunt feugiat. Sed porta eros mi, accumsan tempus magna dignissim at.
+      Pellentesque consequat felis a mauris imperdiet, ac sagittis odio congue. Donec lacinia leo id augue cursus feugiat.
+      Maecenas viverra lectus lorem, vitae pharetra lectus dictum vel.
+      
+      Nunc mattis dictum nibh finibus luctus. Sed laoreet sodales lorem, sed hendrerit magna ullamcorper pulvinar. Morbi
+      porttitor justo in ex convallis, vitae luctus sem blandit. Phasellus tincidunt fringilla enim, in mattis erat malesuada
+      sed. Curabitur sodales tortor velit, dapibus tempus nisi rutrum sit amet. In hendrerit velit sit amet est pulvinar, eu
+      tincidunt arcu sollicitudin. Praesent justo nibh, ullamcorper eget diam ut, condimentum ornare velit.
+      
+      Integer leo ex, condimentum quis pretium nec, hendrerit eget mauris. Proin aliquet interdum sapien, ac convallis enim
+      euismod feugiat. Nunc egestas quis odio ut egestas. Suspendisse facilisis fringilla ex sit amet porttitor. Proin commodo
+      ex dictum vehicula malesuada. Nulla eu nulla ipsum. Cras efficitur lacinia odio at imperdiet. Ut a nibh id diam congue
+      tincidunt. Aenean vitae accumsan nunc. In efficitur est ante, tincidunt accumsan mauris egestas sit amet. Morbi posuere
+      auctor dapibus. Cras tincidunt dui at eros ornare, eget laoreet augue venenatis.
+      
+      Sed sem nisi, venenatis nec pretium ut, feugiat ut velit. Sed mattis odio sit amet ligula pellentesque efficitur. Class
+      aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Quisque neque odio, ultricies ut
+      massa eget, blandit imperdiet elit. Nunc orci mauris, elementum sed neque vel, mollis mattis ligula. Nam finibus dictum
+      tincidunt. Pellentesque sapien ex, posuere nec mi quis, euismod varius nibh. Proin non ipsum in diam lacinia tincidunt.
+      Maecenas ornare arcu et odio convallis tempor. Proin faucibus nisl ex, quis convallis lacus ultrices id. Etiam et
+      scelerisque eros. Fusce condimentum feugiat tincidunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+    </p>
+  </body>
+
+</html>
