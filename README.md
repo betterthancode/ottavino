@@ -76,7 +76,8 @@ Try mounting your awesome component (with shadow DOM) to the document body inste
 
 ## Contribution / Roadmap
 This project attempts to create the simplest developer experience while using the lastest and greatest features the borwser can provide.
-Next in the list are "directives" (custom attributes that executes... anything),
+Next in the list:
+- "directives" (custom attributes that executes... anything),
 - Lifecycle global hooks
 - Plugins
 - Suggest your idea
