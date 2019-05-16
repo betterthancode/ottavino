@@ -108,6 +108,7 @@ export const component = <T extends object = any>(
     options.init.call(proxy, element);
   }
   handler.render(content);
+  return proxy;
 };
 
 const customElement = <T extends object = any>(
@@ -134,6 +135,8 @@ const customElement = <T extends object = any>(
     }
     attributeChangedCallback(attr: string, oldValue: string, newValue: string) {
       if (options.attributes && typeof options.attributes[attr] === 'function') {
+        console.log(this.proxy);
+        debugger;
         options.attributes[attr].call(this.proxy, newValue, oldValue, this);
       }
     }

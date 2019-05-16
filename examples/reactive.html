@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <tiny-moji mood="happy"></tiny-moji>
+  <br/>
+  <tiny-moji mood="sad"></tiny-moji>
+  <script type="module">
+    import { component } from '../dist/index.js';
+
+  component({
+    tag: 'tiny-moji',
+    template: '<span>{{this.moodIcon}}</span>',
+    shadow: true, // optional shadow DOM
+    properties: {
+      moodIcon: '😃'
+    },
+    attributes: {
+      mood: function (newValue /*, oldValue, domElement */) {
+        this.moodIcon = newValue === 'sad' ? '😢' : '😃'
+      }
+    }
+  })
+  </script>
+</body>
+</html>
