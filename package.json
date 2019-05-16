@@ -1,6 +1,6 @@
 {
   "name": "ottavino",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "tiny, fast and declarative custom elements library (but not only custom elements)",
   "main": "dist/index.js",
   "iife": "dist/index.nomodule.js",
