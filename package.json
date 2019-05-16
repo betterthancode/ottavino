@@ -11,7 +11,8 @@
     "prepublish": "npm run build && npm run test"
   },
   "author": "Avichay Eyal <eavichay@gmail.com>",
-  "license": "ISC",
+  "license": "MIT",
+  "repository": "https://github.com/betterthancode/ottavino/",
   "devDependencies": {
     "chai": "^4.2.0",
     "karma": "^4.1.0",
