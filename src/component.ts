@@ -14,7 +14,7 @@ declare interface ComponentHandler<T = any> {
   template: null | HTMLTemplateElement;
   shadow: boolean;
   data: T;
-  [SYMBOLS.TEMPLATE_META]: {
+  [SYMBOLS.TM]: {
     mountPoint: HTMLElement;
     root: HTMLElement | DocumentFragment;
   };
@@ -43,21 +43,21 @@ export type ComponentDescriptor<T> = {
 const componentHandler = <T extends object>(
   mountPoint: string | HTMLElement
 ): ComponentHandler => {
-  const { TEMPLATE_META } = SYMBOLS;
+  const { TM } = SYMBOLS;
   const initialMountPoint = getMountPoint(mountPoint);
   return {
     template: null,
     shadow: false,
     data: {},
-    [TEMPLATE_META]: {
+    [TM]: {
       mountPoint: initialMountPoint,
       root: initialMountPoint
     },
     initialize: function(options: ComponentDescriptor<T>): ComponentInitResult<T> {
       const { properties, closed } = options;
-      const mountPoint: HTMLElement = this[TEMPLATE_META].mountPoint;
+      const mountPoint: HTMLElement = this[TM].mountPoint;
       if (this.shadow && mountPoint.shadowRoot === null) {
-        this[TEMPLATE_META].root = mountPoint.attachShadow({
+        this[TM].root = mountPoint.attachShadow({
           mode: closed ? 'closed' : 'open'
         });
       }
@@ -81,7 +81,7 @@ const componentHandler = <T extends object>(
       return [content as HTMLElement, proxy, mountPoint];
     },
     render: function (content) {
-      const entry = this[TEMPLATE_META].root;
+      const entry = this[TM].root;
       if (this.shadow) {
         entry.appendChild(content);
       } else {
@@ -135,8 +135,6 @@ const customElement = <T extends object = any>(
     }
     attributeChangedCallback(attr: string, oldValue: string, newValue: string) {
       if (options.attributes && typeof options.attributes[attr] === 'function') {
-        console.log(this.proxy);
-        debugger;
         options.attributes[attr].call(this.proxy, newValue, oldValue, this);
       }
     }

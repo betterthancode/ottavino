@@ -6,9 +6,9 @@ export const selector = (selector: string):HTMLElement|SYMBOLS => {
     if (el) {
       return <HTMLElement>el;
     } else {
-      return SYMBOLS.ELEMENT_NOT_FOUND;
+      return SYMBOLS.NF;
     }
   } catch {
-    return SYMBOLS.INVALID_SELECTOR;
+    return SYMBOLS.IS;
   }
 };

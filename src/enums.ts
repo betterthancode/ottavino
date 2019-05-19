@@ -1,5 +1,5 @@
 export enum SYMBOLS {
-  ELEMENT_NOT_FOUND,
-  INVALID_SELECTOR,
-  TEMPLATE_META
+  NF, // not found
+  IS, // invalid selector
+  TM, // template_meta
 }

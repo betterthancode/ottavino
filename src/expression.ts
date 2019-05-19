@@ -4,17 +4,19 @@ type ExpressionResolution = {
 };
 
 export const parse = (expression: string): ExpressionResolution => {
-  const matches = expression.match(/\{\{([^\}\}]+)+\}\}/g);
+  const matches = expression.match(/\{\{\s*(this\.[\w+\d*\.*]+)\}\}+/g);
   const resolution: ExpressionResolution = {
     paths: [],
-    expression: matches ? matches[0] : null
+    expression: matches ? matches[0].trim() : expression.slice()
   };
   if (matches) {
-    const { expression } = resolution;
-    const rxM = /(.+)(\((.+)\)){1}/.exec(expression as string);
-    if (!rxM) {
-      resolution.paths = [(expression as string).slice(2, -2).trim()];
-    }
+    matches.forEach((fullPath: string) => {
+      let dotIndex = fullPath.indexOf('.');
+      if (dotIndex < 0) {
+        return;
+      }
+      resolution.paths.push('this.' + fullPath.slice(dotIndex + 1, -2));
+    })
   }
   return resolution;
 };
