@@ -2,9 +2,6 @@ describe('Creation of components', () => {
   beforeEach(() => {
     document.body.innerHTML = '';
   });
-  afterEach(() => {
-    // document.body.innerHTML = '';
-  })
   describe('Should define a custom element', () => {
     it('with shadow DOM', () => {
       ottavino.component({

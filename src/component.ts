@@ -1,8 +1,7 @@
 import { SYMBOLS } from './enums';
-
 import { getMountPoint, template as createTemplate } from './template';
-
 import { scanDOMTree } from './nodes';
+import { Directive } from './directives/IDirective';
 
 declare type ComponentInitResult<T extends object> = [
   HTMLElement,
@@ -10,7 +9,7 @@ declare type ComponentInitResult<T extends object> = [
   HTMLElement
 ];
 
-declare interface ComponentHandler<T = any> {
+export interface ComponentHandler<T = any> {
   template: null | HTMLTemplateElement;
   shadow: boolean;
   data: T;
@@ -29,6 +28,7 @@ declare type ComponentInitializer<T extends object = any> = (
 export type ComponentDescriptor<T> = {
   properties?: { [key: string]: any };
   attributes?: { [key: string]: Function };
+  directives?: Directive[];
   init?: (element: HTMLElement) => any;
   tag?: string;
   mount?: string | HTMLElement;
@@ -39,6 +39,8 @@ export type ComponentDescriptor<T> = {
   connectedCallback?: Function,
   disconnectedCallback?: Function
 };
+
+const globalDirectives: Directive[] = [];
 
 const componentHandler = <T extends object>(
   mountPoint: string | HTMLElement
@@ -54,7 +56,7 @@ const componentHandler = <T extends object>(
       root: initialMountPoint
     },
     initialize: function(options: ComponentDescriptor<T>): ComponentInitResult<T> {
-      const { properties, closed } = options;
+      const { properties, closed, directives } = options;
       const mountPoint: HTMLElement = this[TM].mountPoint;
       if (this.shadow && mountPoint.shadowRoot === null) {
         this[TM].root = mountPoint.attachShadow({
@@ -67,7 +69,8 @@ const componentHandler = <T extends object>(
       const [proxy, update] = scanDOMTree(
         content as Element,
         this.data,
-        mountPoint
+        mountPoint,
+        [...globalDirectives, ...directives || []]
       );
       if (properties) {
         Object.entries(properties).forEach(([key, value]) => {
@@ -78,6 +81,7 @@ const componentHandler = <T extends object>(
           });
         });
       }
+      update();
       return [content as HTMLElement, proxy, mountPoint];
     },
     render: function (content) {
@@ -111,6 +115,10 @@ export const component = <T extends object = any>(
   return proxy;
 };
 
+export const registerDirective = (directive: Directive) => {
+  if (globalDirectives.indexOf(directive) < 0) globalDirectives.push(directive);
+}
+
 const customElement = <T extends object = any>(
   options: ComponentDescriptor<T>
 ) => {
@@ -141,3 +149,6 @@ const customElement = <T extends object = any>(
   }
   customElements.define(options.tag as string, TinyComponent);
 };
+
+import registerPropertyInjector from './directives/property-injector';
+registerPropertyInjector(registerDirective);

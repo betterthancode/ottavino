@@ -6,9 +6,11 @@
   "iife": "dist/index.nomodule.js",
   "scripts": {
     "test": "karma start test/karma.config.js",
+    "test-dev": "NODE_ENV=development karma start test/karma.config.js",
     "pretest": "npm run build",
     "build": "rollup -c",
-    "prepublish": "npm run build && npm run test"
+    "dev": "NODE_ENV=development rollup -c -w",
+    "prepublish": "npm run test"
   },
   "author": "Avichay Eyal <eavichay@gmail.com>",
   "license": "MIT",

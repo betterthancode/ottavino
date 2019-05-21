@@ -1,3 +1,6 @@
+const { NODE_ENV } = process.env;
+console.log('ENV: ' + NODE_ENV);
+
 module.exports = function (config) {
   config.set({
     frameworks: ['mocha', 'chai'],
@@ -7,8 +10,8 @@ module.exports = function (config) {
     colors: true,
     logLevel: config.LOG_INFO,
     browsers: ['ChromeHeadless'],
-    autoWatch: false,
-    singleRun: true,
-    concurrency: Infinity
-  })
+    autoWatch: NODE_ENV === 'development',
+    singleRun: NODE_ENV !== 'development',
+    concurrency: false
+  });
 };

@@ -2,8 +2,8 @@ import typescript from 'rollup-plugin-typescript2';
 import pkg from './package.json';
 import {terser} from 'rollup-plugin-terser';
 
-export default {
-  input: 'src/component.ts',
+const module = {
+  input: 'src/index.ts',
   output: [
     {
       file: pkg.main,
@@ -23,6 +23,11 @@ export default {
     typescript({
       typescript: require('typescript')
     }),
-    terser()
   ]
 };
+
+if (process.env.NODE_ENV !== 'development') {
+  module.plugins.push(terser());
+}
+
+export default module;

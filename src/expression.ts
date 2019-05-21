@@ -1,22 +1,21 @@
+const stripCurlies = /(\{\{([^\{|^\}]+)\}\})/gi;
+
 type ExpressionResolution = {
   paths: string[];
   expression: string | null;
+  expressions: string[];
 };
 
 export const parse = (expression: string): ExpressionResolution => {
-  const matches = expression.match(/\{\{\s*(this\.[\w+\d*\.*]+)\}\}+/g);
-  const resolution: ExpressionResolution = {
-    paths: [],
-    expression: matches ? matches[0].trim() : expression.slice()
-  };
-  if (matches) {
-    matches.forEach((fullPath: string) => {
-      let dotIndex = fullPath.indexOf('.');
-      if (dotIndex < 0) {
-        return;
-      }
-      resolution.paths.push('this.' + fullPath.slice(dotIndex + 1, -2));
-    })
+  let match;
+  let paths = [];
+  const regexp = /(this\.[\w+|\d*]*)+/gi;
+  while (match = regexp.exec(expression)) {
+    paths.push(match[1]);
   }
-  return resolution;
+  return {
+    paths,
+    expression,
+    expressions: paths.length ? expression.match(stripCurlies) || [] : []
+  };
 };

@@ -1,0 +1,1 @@
+export {component, registerDirective, ComponentDescriptor, ComponentHandler} from './component'; 
