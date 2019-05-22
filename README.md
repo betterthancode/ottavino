@@ -6,9 +6,12 @@
 ## Tiny, Fast and Declarative User Interface Development
 Using native custom elements API (but not only)
 
+[![Build Status](https://semaphoreci.com/api/v1/eavichay/ottavino/branches/master/badge.svg)](https://semaphoreci.com/eavichay/ottavino)
+
+
 As simple as it gets.
 
-### [See the docs](/docs/globals.html)
+### [See the docs](https://betterthancode.github.io/ottavino/globals.html)
 
 ```typescript
 import { component } from 'ottavino'

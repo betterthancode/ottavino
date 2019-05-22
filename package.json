@@ -7,16 +7,18 @@
   "scripts": {
     "test": "karma start test/karma.config.js",
     "test-dev": "NODE_ENV=development karma start test/karma.config.js",
-    "pretest": "npm run build",
     "build": "rollup -c",
     "dev": "NODE_ENV=development rollup -c -w",
-    "prepublish": "npm run test && npm run docs",
+    "prepublishOnly": "npm run build && npm run test && npm run docs",
     "docs": "typedoc --out docs src --excludeNotExported --mode file"
   },
   "author": "Avichay Eyal <eavichay@gmail.com>",
   "license": "MIT",
   "repository": "https://github.com/betterthancode/ottavino/",
-  "devDependencies": {},
+  "devDependencies": {
+    "karma-firefox-launcher": "^1.1.0",
+    "karma-safari-launcher": "^1.0.0"
+  },
   "dependencies": {
     "@microsoft/tsdoc": "^0.12.9",
     "typedoc": "^0.14.2",
