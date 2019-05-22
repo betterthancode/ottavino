@@ -16,7 +16,7 @@ module.exports = function (config) {
     browsers: ['ChromeHeadless', 'FirefoxHeadless'],
     autoWatch: NODE_ENV === 'development',
     singleRun: NODE_ENV !== 'development',
-    concurrency: false,
+    concurrency: true,
     customLaunchers: {
       FirefoxHeadless: {
         base: 'Firefox',
