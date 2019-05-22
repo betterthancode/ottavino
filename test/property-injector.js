@@ -1,3 +1,5 @@
+ottavinoDirectives.propertyInjector(ottavino.registerDirective);
+
 describe('Property Injector Directive', () => {
   beforeEach(() => {
     document.body.innerHTML = '';
@@ -12,7 +14,7 @@ describe('Property Injector Directive', () => {
       `,
       properties: {
         test: 'passed'
-      }
+      },
     });
     const el = document.createElement('prop-injector-1');
     document.body.appendChild(el);

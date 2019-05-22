@@ -163,6 +163,3 @@ const customElement = (options: TagDescriptor) => {
   }
   customElements.define(options.tag as string, TinyComponent);
 };
-
-import registerPropertyInjector from './directives/property-injector';
-registerPropertyInjector(registerDirective);
