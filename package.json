@@ -1,6 +1,6 @@
 {
   "name": "ottavino",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "tiny, fast and declarative custom elements library (but not only custom elements)",
   "main": "dist/index.js",
   "iife": "dist/index.nomodule.js",
@@ -11,7 +11,7 @@
     "build": "rollup -c",
     "dev": "NODE_ENV=development rollup -c -w",
     "prepublish": "npm run test && npm run docs",
-    "docs": "typedoc --out docs src --excludeNotExported"
+    "docs": "typedoc --out docs src --excludeNotExported --mode file"
   },
   "author": "Avichay Eyal <eavichay@gmail.com>",
   "license": "MIT",

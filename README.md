@@ -8,7 +8,7 @@ Using native custom elements API (but not only)
 
 As simple as it gets.
 
-### [See the docs](/docs/gloals.html)
+### [See the docs](/docs/globals.html)
 
 ```typescript
 import { component } from 'ottavino'
