@@ -1,7 +1,10 @@
 import { createProxy } from './proxy';
 import { parse } from './expression';
-import { Directive } from './directives/IDirective';
+import { Directive } from './interfaces';
 
+/**
+ * @ignore
+ */
 const propagate = (binders: { [path: string]: Function[] }) => (
   key: string
 ) => {
@@ -10,6 +13,9 @@ const propagate = (binders: { [path: string]: Function[] }) => (
   );
 };
 
+/**
+ * @ignore
+ */
 export const scanDOMTree = (
   root: Element,
   model: any,

@@ -1,6 +1,12 @@
-import { DirectiveRegistration } from './IDirective';
+// @tsdoc-ignore
 
-export default (registerDirective: DirectiveRegistration) => {
+import { Directive } from '../interfaces';
+
+/**
+ * @ignore
+ * @internal
+ */
+export default (registerDirective: (directive: Directive) => void) => {
   registerDirective({
     attribute: attr =>
       attr.nodeName.startsWith('[') && attr.nodeName.endsWith(']'),

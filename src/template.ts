@@ -1,7 +1,15 @@
 import { selector } from './selector';
 
+/**
+ * @internal
+ * @ignore
+ */
 export type SelectorResult = HTMLTemplateElement | DocumentFragment;
 
+/**
+ * @internal
+ * @ignore
+ */
 export const template = (raw: string|HTMLTemplateElement): HTMLTemplateElement => {
   if (raw instanceof HTMLTemplateElement) {
     return raw;
@@ -12,6 +20,10 @@ export const template = (raw: string|HTMLTemplateElement): HTMLTemplateElement =
   }
 };
 
+/**
+ * @internal
+ * @ignore
+ */
 export const getMountPoint = (raw: string | HTMLElement) => {
   if (raw instanceof HTMLElement) {
     return raw;

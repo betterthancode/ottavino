@@ -6,7 +6,10 @@
 ## Tiny, Fast and Declarative User Interface Development
 Using native custom elements API (but not only)
 
-As simple as it gets
+As simple as it gets.
+
+### [See the docs](/docs/gloals.html)
+
 ```typescript
 import { component } from 'ottavino'
 

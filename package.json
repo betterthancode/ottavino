@@ -10,12 +10,16 @@
     "pretest": "npm run build",
     "build": "rollup -c",
     "dev": "NODE_ENV=development rollup -c -w",
-    "prepublish": "npm run test"
+    "prepublish": "npm run test && npm run docs",
+    "docs": "typedoc --out docs src --excludeNotExported"
   },
   "author": "Avichay Eyal <eavichay@gmail.com>",
   "license": "MIT",
   "repository": "https://github.com/betterthancode/ottavino/",
-  "devDependencies": {
+  "devDependencies": {},
+  "dependencies": {
+    "@microsoft/tsdoc": "^0.12.9",
+    "typedoc": "^0.14.2",
     "chai": "^4.2.0",
     "karma": "^4.1.0",
     "karma-chai": "^0.1.0",

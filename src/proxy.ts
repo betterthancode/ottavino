@@ -1,3 +1,7 @@
+/**
+ * @ignore
+ * @internal
+ */
 export const createProxy = (target: any, update: Function, prefix = '') => {
   const store: any = {};
   return [

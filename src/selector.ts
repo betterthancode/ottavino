@@ -1,5 +1,9 @@
 import { SYMBOLS } from './enums';
 
+/**
+ * @internal
+ * @ignore
+ */
 export const selector = (selector: string):HTMLElement|SYMBOLS => {
   try {
     const el = document.querySelector(selector);

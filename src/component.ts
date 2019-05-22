@@ -1,14 +1,30 @@
+/** @ignore */
 import { SYMBOLS } from './enums';
+/** @ignore */
 import { getMountPoint, template as createTemplate } from './template';
+/** @ignore */
 import { scanDOMTree } from './nodes';
-import { Directive } from './directives/IDirective';
+/** @ignore */
+import {
+  Directive,
+  ComponentDescriptor,
+  MountPointDescriptor,
+  TagDescriptor
+} from './interfaces';
 
+/**
+ * @ignore
+ */
 declare type ComponentInitResult<T extends object> = [
   HTMLElement,
   ProxyHandler<T>,
   HTMLElement
 ];
 
+/**
+ * @ignore
+ * @internal
+ */
 export interface ComponentHandler<T = any> {
   template: null | HTMLTemplateElement;
   shadow: boolean;
@@ -21,27 +37,22 @@ export interface ComponentHandler<T = any> {
   render: (content: HTMLElement) => void;
 }
 
+/**
+ * @ignore
+ */
 declare type ComponentInitializer<T extends object = any> = (
-  options: ComponentDescriptor<T>
+  options: ComponentDescriptor
 ) => ComponentInitResult<T>;
 
-export type ComponentDescriptor<T> = {
-  properties?: { [key: string]: any };
-  attributes?: { [key: string]: Function };
-  directives?: Directive[];
-  init?: (element: HTMLElement) => any;
-  tag?: string;
-  mount?: string | HTMLElement;
-  template: string;
-  this?: T;
-  shadow?: boolean;
-  closed?: boolean;
-  connectedCallback?: Function,
-  disconnectedCallback?: Function
-};
 
+/**
+ * @ignore
+ */
 const globalDirectives: Directive[] = [];
 
+/**
+ * @internal
+ */
 const componentHandler = <T extends object>(
   mountPoint: string | HTMLElement
 ): ComponentHandler => {
@@ -55,7 +66,7 @@ const componentHandler = <T extends object>(
       mountPoint: initialMountPoint,
       root: initialMountPoint
     },
-    initialize: function(options: ComponentDescriptor<T>): ComponentInitResult<T> {
+    initialize: function(options: ComponentDescriptor): ComponentInitResult<T> {
       const { properties, closed, directives } = options;
       const mountPoint: HTMLElement = this[TM].mountPoint;
       if (this.shadow && mountPoint.shadowRoot === null) {
@@ -97,13 +108,15 @@ const componentHandler = <T extends object>(
   };
 };
 
-export const component = <T extends object = any>(
-  options: ComponentDescriptor<T>
-) => {
-  if (!options.mount && options.tag) {
-    return customElement<T>(options);
+/**
+ * Initializes a component as a custom element or virtual component mounted on a DOM node
+ * @param {ComponentDescriptor} options 
+ */
+export function component(options: ComponentDescriptor) {
+  if (!(<MountPointDescriptor>options).mount && (<TagDescriptor>options).tag) {
+    return customElement(options as TagDescriptor);
   }
-  const handler = componentHandler(options.mount as string | HTMLElement);
+  const handler = componentHandler((<MountPointDescriptor>options).mount as string | HTMLElement);
   handler.template = createTemplate(options.template);
   handler.shadow = !!options.shadow;
   handler.data = options.this || {};
@@ -115,16 +128,17 @@ export const component = <T extends object = any>(
   return proxy;
 };
 
-export const registerDirective = (directive: Directive) => {
+export function registerDirective (directive: Directive) {
   if (globalDirectives.indexOf(directive) < 0) globalDirectives.push(directive);
 }
 
-const customElement = <T extends object = any>(
-  options: ComponentDescriptor<T>
-) => {
+/**
+ * @internal
+ */
+const customElement = (options: TagDescriptor) => {
   class TinyComponent extends HTMLElement {
     proxy = component({
-      ...options,
+      ...options as ComponentDescriptor,
       mount: this
     });
 
@@ -133,12 +147,12 @@ const customElement = <T extends object = any>(
     }
     connectedCallback() {
       if (typeof options.connectedCallback === 'function') {
-        options.connectedCallback.call(this.proxy);
+        options.connectedCallback.call(this.proxy, this);
       }
     }
     disconnectedCallback() {
       if (typeof options.disconnectedCallback === 'function') {
-        options.disconnectedCallback.call(this.proxy);
+        options.disconnectedCallback.call(this.proxy, this);
       }
     }
     attributeChangedCallback(attr: string, oldValue: string, newValue: string) {

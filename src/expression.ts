@@ -1,11 +1,23 @@
+/**
+ * @internal
+ * @ignore
+ */
 const stripCurlies = /(\{\{([^\{|^\}]+)\}\})/gi;
 
-type ExpressionResolution = {
+/**
+ * @internal
+ * @ignore
+ */
+export type ExpressionResolution = {
   paths: string[];
   expression: string | null;
   expressions: string[];
 };
 
+/**
+ * @internal
+ * @ignore
+ */
 export const parse = (expression: string): ExpressionResolution => {
   let match;
   let paths = [];
