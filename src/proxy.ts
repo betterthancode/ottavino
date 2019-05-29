@@ -9,7 +9,7 @@ export const createProxy = (target: any, update: Function, prefix = '') => {
     new Proxy(target, {
       get: (t, key) => {
         if (!store.hasOwnProperty(key)) {
-          if (typeof target[key] === 'object') {
+          if (typeof target[key] === 'object' && !(target[key] instanceof HTMLElement)) {
             store[key] = createProxy(
               target[key],
               update,

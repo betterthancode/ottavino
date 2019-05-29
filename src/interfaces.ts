@@ -36,6 +36,8 @@ export interface Directive<T = any> {
    * When `attribute` function returns a truthy value this function is called to process or initiate the directive actions
    */
   process: (options: DirectiveProcessOptions<T>) => Function | void;
+
+  registerAsGlobal?: (register: DirectiveRegister|undefined) => void
 }
 
 /**
@@ -189,3 +191,5 @@ export type AttributeChangeHandler = (
   oldValue: string,
   node: HTMLElement
 ) => void;
+
+export type DirectiveRegister = (directive: Directive) => void;

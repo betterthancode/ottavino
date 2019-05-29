@@ -1,4 +1,7 @@
-import { component } from '../../dist/index.js';
+import { component, registerDirective } from '../../dist/index.js';
+
+import propertiesDirectives from '../../dist/directives/propertyInjector.js';
+propertiesDirectives.registerAsGlobal(registerDirective);
 
 component({
   tag: 'parent-component',

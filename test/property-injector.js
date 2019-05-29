@@ -1,4 +1,4 @@
-ottavinoDirectives.propertyInjector(ottavino.registerDirective);
+ottavinoDirectives.propertyInjector.registerAsGlobal();
 
 describe('Property Injector Directive', () => {
   beforeEach(() => {

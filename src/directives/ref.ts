@@ -1,18 +1,31 @@
 // @tsdoc-ignore
 
-import { Directive } from '../interfaces';
+import { DirectiveProcessOptions, Directive } from '../interfaces';
+
+// @tsdoc-ignore
 
 /**
  * @ignore
- * @internal
  */
-export default (registerDirective: (directive: Directive) => void) => {
-  registerDirective({
-    attribute: attr =>
-      attr.nodeName === '#ref',
-    process: ({ componentHandler, targetNode, attribute }) => {
-      const key = attribute.nodeValue as string;
-      (<any>componentHandler)[key] = targetNode;
+export default {
+  attribute: (attr: any) => attr.nodeName === '#ref',
+  process: ({
+    componentNode,
+    componentHandler,
+    targetNode,
+    attribute
+  }: DirectiveProcessOptions) => {
+    const key = attribute.nodeValue as string;
+    (<any>componentHandler).$ = (<any>componentNode).ref = {
+      ...((<any>componentNode).ref || {}),
+      [key]: targetNode
+    };
+  },
+  registerAsGlobal: function(register: Function | undefined) {
+    if (typeof register === 'function') {
+      register(this);
+    } else {
+      (<any>window).ottavino.registerDirective(this);
     }
-  });
-};
+  }
+} as Directive;
