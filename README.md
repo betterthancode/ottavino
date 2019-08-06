@@ -46,7 +46,7 @@ window.ottavino.component({
 ```
 
 ## Footprint (KBGzipped) ~1.5
-1534 bytes in commit hash `8c90491`
+Small: ![npm bundle size](https://img.shields.io/bundlephobia/minzip/ottavino?label=bundle%20size)
 
 ## API
 `component(options: ComponentDescriptor<T?>) => ComponentProxy<T>`
